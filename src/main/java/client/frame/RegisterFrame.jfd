@@ -1,0 +1,79 @@
+JFDML JFormDesigner: "7.0.5.0.404" Java: "11.0.12" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "账号"
+				"font": &Font0 new java.awt.Font( "楷体", 0, 20 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 82
+				"y": 64
+				"width": 51
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "密码"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 82
+				"y": 120
+				"width": 51
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "昵称"
+				"font": #Font0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 82
+				"y": 176
+				"width": 51
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "id_TextFiled"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 151
+				"y": 65
+				"width": 194
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "pwd_TextFiled"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 151
+				"y": 121
+				"width": 194
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "name_TextFiled"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 151
+				"y": 177
+				"width": 194
+				"height": 43
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "确认"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button1MouseClicked", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 192
+				"y": 238
+				"width": 105
+				"height": 37
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 5, 35 )
+			"size": new java.awt.Dimension( 465, 345 )
+		} )
+	}
+}

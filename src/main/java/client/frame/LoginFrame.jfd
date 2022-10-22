@@ -1,0 +1,51 @@
+JFDML JFormDesigner: "7.0.5.0.404" Java: "11.0.12" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:87:p, par l {seq l {comp label1:::p:51:p, space s:::p, par l {comp label2:::p:210:p, comp id_TextFiled:::p:194:p}}, seq l {comp label3:::p:51:p, space :18:18:p, par l {seq l {space :6:6:p, comp label4:::p::p}, comp pwd_TextFiled:::p:194:p}}, seq l {space :p:109:p, comp button1:::p::p}}, space ::107:x}}"
+			"$verticalGroup": "par l {seq l {space :p:46:p, comp label2:::p:65:p, space :::p, par b {comp id_TextFiled::b:p:43:p, comp label1::b:p:43:p}, space u:::p, par l {comp label3:::p:43:p, seq l {space :1:1:p, comp pwd_TextFiled:::p:43:p}}, space u:::p, comp label4:::p::p, space s:::p, comp button1:::p:42:p, space ::45:x}}"
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "账号"
+				"font": &Font0 new java.awt.Font( "楷体", 0, 20 )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "id_TextFiled"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "登录聊天室"
+				"font": new java.awt.Font( "等线", 0, 28 )
+				"foreground": sfield java.awt.Color red
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "密码"
+				"font": #Font0
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "pwd_TextFiled"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "登录"
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "button1MouseClicked", true ) )
+				addEvent( new FormEvent( "java.awt.event.KeyListener", "keyPressed", "button1KeyPressed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "注册账号"
+				"foreground": new java.awt.Color( 0, 179, 239, 255 )
+				"font": new java.awt.Font( "Microsoft YaHei UI", 0, 18 )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "label4MouseClicked", true ) )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 475, 390 )
+		} )
+	}
+}

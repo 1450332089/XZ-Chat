@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="XZ-Chat:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/XZ_Chat_jar</output-path>
+    <root id="archive" name="XZ-Chat.jar">
+      <element id="module-output" name="XZ-Chat" />
+      <element id="extracted-dir" path="D:/Environment/apache-maven-3.8.3/maven_repo/com/alibaba/fastjson/1.2.47/fastjson-1.2.47.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Environment/apache-maven-3.8.3/maven_repo/org/mybatis/mybatis/3.5.2/mybatis-3.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Environment/apache-maven-3.8.3/maven_repo/com/google/protobuf/protobuf-java/3.11.4/protobuf-java-3.11.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Environment/apache-maven-3.8.3/maven_repo/mysql/mysql-connector-java/8.0.26/mysql-connector-java-8.0.26.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

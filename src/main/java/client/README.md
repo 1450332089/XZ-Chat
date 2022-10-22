@@ -1,0 +1,9 @@
+frame为视图层
+
+service为业务层
+
+clientSocket为socket层；mapper为dao层
+
+视图层调业务层，业务层调socket层与dao层
+
+要运行此程序，必须把MyClient中的ip地址改为自己的
