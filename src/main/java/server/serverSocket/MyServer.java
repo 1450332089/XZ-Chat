@@ -1,5 +1,7 @@
 package server.serverSocket;
 
+import server.pojo.MessageData;
+import server.service.ChatService;
 import server.service.ChatServiceImpl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -14,13 +16,25 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class MyServer {
     InetAddress address = null; //服务器地址
     int port = 18888;       //服务器端口号
     DatagramSocket socket;  //服务器socket
-    Map<Integer, LoggedUser> clientMap = new HashMap<>();    //存放用户信息的集合
+    int threadNum = 3;
+    /*
+    记录一个bug：
+    一开始我直接private ChatService chatService = new ChatServiceImpl();
+    后面chatServiceImpl里的Myserver会报空指针，因为第一次创建Myserver时，
+    会在构造方法里新建ChatServiceImpl，而ChatServiceImpl的构造方法里又会MyServer.getInstance();
+    这时静态内部类里的instance对象还未初始化，会返回null
+     */
+    private ChatService chatService;
     //单例模式
     private static class SingletonClassInstance{
         private static final MyServer instance=new MyServer();
@@ -28,20 +42,28 @@ public class MyServer {
     public static MyServer getInstance(){
         return MyServer.SingletonClassInstance.instance;
     }
+    private MyServer(){
+
+    }
 
     public void init(){
         try {
             socket = new DatagramSocket(port);
+            chatService = new ChatServiceImpl();
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        new Thread(() -> {
+        ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
+        Runnable runnable = () -> {
             try {
                 receiveMessage();		//调用接收函数
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+        };
+        for (int i = 0; i < threadNum; i++) {
+            executorService.execute(runnable);
+        }
     }
     public void sendMessage(String msg,String ip,int port){
         try {
@@ -59,7 +81,6 @@ public class MyServer {
     public void receiveMessage() throws Exception{
         while(true){
             address = InetAddress.getLocalHost();
-//            String ip = address.getHostAddress();
 
             byte[] byte01=new byte[1024];
             DatagramPacket packet =new DatagramPacket(byte01,byte01.length);//创建包接收信息
@@ -77,58 +98,8 @@ public class MyServer {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            //将JsonString转化为jsonObject，然后取值
-            JSONObject jsonObject = Utils.String2Json(str);
-            int id = (int) jsonObject.get("id");
-            String name = (String) jsonObject.get("name");
-            String text = (String) jsonObject.get("text");
-            //将jsonArray转换为ArrayList
-            JSONArray emojiJsonArray = (JSONArray) jsonObject.get("emoji");
-            ArrayList<EmojiIcon> emojiIconList = null;
-            if(emojiJsonArray!=null){
-                emojiIconList = new ArrayList<>();
-                for (int i = 0; i < emojiJsonArray.size(); i++) {
-                    int id1 = (int) emojiJsonArray.getJSONObject(i).get("id");
-                    int location = (int) emojiJsonArray.getJSONObject(i).get("location");
-                    EmojiIcon emojiIcon = new EmojiIcon(location,id1);
-                    emojiIconList.add(emojiIcon);
-                }
-            }
-
-            String date = (String) jsonObject.get("date");
-            int type = (int) jsonObject.get("type");
-
-            System.out.println("客户端map："+clientMap);
-
-            HashMap<String,Object> messageMap = new HashMap<>();
-            messageMap.put("text",text);
-            messageMap.put("emoji",emojiIconList);
-            messageMap.put("id",id);
-            messageMap.put("name",name);
-
-            ChatServiceImpl chatService = new ChatServiceImpl();
-            switch (type){
-                //收到了登录消息，则添加该用户
-                case Message.REQUEST_LOGIN:
-                    chatService.addUser(clientMap,id,name,clientIP,clientPort);
-                    break;
-                //收到了下线消息，则删除该用户
-                case Message.REQUEST_LOGOUT:
-                    chatService.delUser(clientMap,id);
-                    break;
-                //收到群聊文字消息，则广播该消息
-                case Message.MESSAGE_PUBLIC:
-                    System.out.println("收到文字"+str);
-                    chatService.broadcast(clientMap,messageMap);
-                    break;
-                //收到私聊文字消息，则只向对应用户转发该消息
-                case Message.MESSAGE_PRIVATE:
-                    System.out.println("收到私聊请求"+str);
-                    int toId = (int) jsonObject.get("toId");
-                    chatService.individualCast(clientMap,toId,str);
-                    break;
-                default:break;
-            }
+            MessageData messageData = new MessageData(clientIP, clientPort, str);
+            chatService.processMessage(messageData);
         }
 
     }

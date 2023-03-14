@@ -2,13 +2,15 @@ package server.service;
 
 
 import common.pojo.LoggedUser;
+import server.pojo.MessageData;
 import server.serverSocket.MyServer;
 
 import java.util.Map;
 
 public interface ChatService {
-    public void addUser(Map<Integer, LoggedUser> map, int id, String name, String ip, int port);
-    public void delUser(Map<Integer, LoggedUser> map, int id);
-    public void broadcast(Map<Integer, LoggedUser> userMap, Map<String , Object> messageMap);
-    public void individualCast(Map<Integer, LoggedUser> userMap,int toId,String msg);
+    void processMessage(MessageData msg);
+    void addUser(int id, String name, String ip, int port);
+    void delUser(int id);
+    void broadcast(Map<String , Object> messageMap);
+    void individualCast(int toId,String msg);
 }
