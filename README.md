@@ -1,5 +1,5 @@
 # XZ-Chat
-基于UDP的网络聊天室。采用JAVA GUI实现。聊天使用socket编程，数据库为mysql+mybatis。
+Socket实现的C/S网络聊天室，使用javaSwing实现GUI界面，数据库为mysql+mybatis。
 演示：
 1.登录
 ![image](https://user-images.githubusercontent.com/78432919/197316671-9f2c6f96-c049-4352-94a8-68a192608b84.png)
